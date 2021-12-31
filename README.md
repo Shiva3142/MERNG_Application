@@ -101,6 +101,7 @@
 <h3>Required things</h3>
 <ul>
     <li>NodeJS Must be installed</li>
+    <li>confiv.env file is needed to run application</li>
 </ul>
 <h2>Steps to Setup at start</h2>
 <ol>
