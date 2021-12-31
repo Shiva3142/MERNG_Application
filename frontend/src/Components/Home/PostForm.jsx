@@ -43,22 +43,9 @@ function PostForm(object) {
 
     const [mutation, { data2, loading2, error2}] = useMutation(POST_THE_POST, {
         update(proxy, result) {
-            // console.log(proxy);
-            // console.log(result);
-            // object.updatecontent()
-            // let data = proxy.readQuery({
-            //     query: FETCH_POST_QUERY
-            // })
-            // console.log(data);
-            // let details = {}
-            // details.getPostDetails = [ ...data.getPostDetails,result.data.createPost]
-            // console.log(details);
-            // proxy.writeQuery({ query: FETCH_POST_QUERY, details })
         },
         onError(errors) {
             console.log(errors);
-            // console.log(Object.values(errors.graphQLErrors[0].extensions.errors)[0]);
-            // window.alert(Object.values(errors.graphQLErrors[0].extensions.errors)[0]);
         },
     });
     async function PostThePost(event) {

@@ -43,8 +43,6 @@ function Login() {
     }, [])
     const [mutation, { data, loading, error }] = useMutation(REGISTER_QUERY, {
         update(proxy, result) {
-            // console.log(proxy);
-            // console.log(result);
             localStorage.setItem("token", result.data.loginUser.token)
             dispatch({ type: "LOGIN", username: result.data.loginUser.name, email: result.data.loginUser.email })
             updateShowLoder(0)
@@ -52,8 +50,6 @@ function Login() {
         },
         onError(errors) {
             updateShowLoder(0)
-            // console.log(errors);
-            // console.log(Object.values(errors.graphQLErrors[0].extensions.errors)[0]);
             window.alert(Object.values(errors.graphQLErrors[0].extensions.errors)[0]);
         },
     });
@@ -75,11 +71,6 @@ function Login() {
         updateShowLoder(1)
         event.preventDefault()
         if (userDetails.email.trim() !== "" && userDetails.password.trim() !== "") {
-            console.log("in login");
-
-            // if (data) {
-            //     console.log(data);
-            // }
             let result = await mutation({
                 variables: {
                     name: userDetails.name,
@@ -87,7 +78,6 @@ function Login() {
                     password: userDetails.password
                 }
             })
-            // console.log(result);
         }
         else {
             alert("Please Fill All the required fields")
@@ -106,7 +96,6 @@ function Login() {
             <div className="ui container menu">
                 <NavLink to="/" className="active item">Home</NavLink>
             </div>
-          
             <div className="ui middle aligned center aligned grid signupformcontainer">
                 <div className="column signupform">
                     <h2 className="ui teal image header">

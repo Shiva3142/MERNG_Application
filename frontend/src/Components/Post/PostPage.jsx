@@ -82,20 +82,14 @@ function PostPage(object) {
     let { post_id } = useParams()
     let navigate = useNavigate()
     let { state, dispatch } = useContext(userContext)
-    console.log(state);
-    console.log(post_id);
     const { loading, error, data, refetch } = useQuery(FETCH_POST_QUERY, { variables: { id: post_id } });
     if (data) {
-        // console.log(data);
-        // console.log(data.getPostdetail);
     }
     else {
         navigate("/")
     }
     const [mutation, { data2, loading2, error2 }] = useMutation(DELETE_THE_POST, {
         update(proxy, result) {
-            // console.log(proxy);
-            // console.log(result);
             navigate("/")
         },
         onError(errors) {
@@ -104,8 +98,6 @@ function PostPage(object) {
     });
     const [commentmutation, { data3, loading3, error3 }] = useMutation(CREATE_COMMENT, {
         update(proxy, result) {
-            // console.log(proxy);
-            // console.log(result);
             refetch()
         },
         onError(errors) {
@@ -114,8 +106,6 @@ function PostPage(object) {
     });
     const [likemutation, { data5, loading5, error5 }] = useMutation(LIKE_THE_POST, {
         update(proxy, result) {
-            // console.log(proxy);
-            // console.log(result);
             refetch()
         },
         onError(errors) {
@@ -125,14 +115,19 @@ function PostPage(object) {
 
 
     async function likeThePost(event) {
-        updateShowLoder(1)
-
-        await likemutation({
-            variables: {
-                id: data.getPostdetail.id
-            }
-        })
-        updateShowLoder(0)
+        if (state.user===true) {
+            updateShowLoder(1)
+    
+            await likemutation({
+                variables: {
+                    id: data.getPostdetail.id
+                }
+            })
+            updateShowLoder(0)
+            
+        } else {
+            window.alert("Please Login To like and Comment on Post ")
+        }
     }
 
 
@@ -148,7 +143,6 @@ function PostPage(object) {
     }
     async function createComment() {
         updateShowLoder(1)
-
         await commentmutation({
             variables: {
                 id: data.getPostdetail.id,
@@ -158,12 +152,6 @@ function PostPage(object) {
         updateShowLoder(0)
         updateComment("")
     }
-
-    // useEffect(()=>{
-        // refetch()
-        // updateShowLoder(0)
-    // },[])
-
 
     return (
         <>

@@ -29,8 +29,6 @@ function Post(object) {
 
     const [mutation, { data2, loading2, error2 }] = useMutation(LIKE_THE_POST, {
         update(proxy, result) {
-            // console.log(proxy);
-            // console.log(result);
             updatelikecount(result.data.likePost.likeCount)
         },
         onError(errors) {

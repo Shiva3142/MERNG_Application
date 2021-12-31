@@ -25,13 +25,6 @@ function PostsContainer() {
     // let [contentstate,updateContentState]=useState(true)
     let { state, dispatch } = useContext(userContext)
     const { loading, error, data, refetch } = useQuery(FETCH_POST_QUERY);
-    // if (loading) {
-    //     console.log("loading");
-    // }
-    // if (!error) {
-    // }
-    // if (data) {
-    // }
     useEffect(() => {
         refetch()
         updateShowLoder(0)
@@ -57,26 +50,23 @@ function PostsContainer() {
             <h1 style={{ textAlign: "center" }}>Some of the recent Posts</h1>
             <div className="ui cards postcontainer">
 
+
                 {
-                    data && data.getPostdetails ? (
-                        <>
-                            {
-                                data.getPostdetails.length === 0 ? (<>
-
-                                    <div class="ui raised segment">None of the Post Are available Yet .</div>
-                                </>) : (<></>)
-                            }
-                        </>
-                    ) : (<>
-
+                    data && data.getPostDetails.length === 0 ? (<>
+                        <div class="ui raised segment">None of the Post Are available Yet .</div>
+                    </>) : (<>
                         {
                             data && data.getPostDetails.map((value, index) => {
                                 // console.log(value);
                                 return <Post key={index} value={value} />
                             })
                         }
+
                     </>)
                 }
+
+
+
 
             </div>
         </>

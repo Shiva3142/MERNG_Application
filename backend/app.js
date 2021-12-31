@@ -17,7 +17,6 @@ const {
 const {
     typeDefs
 } = require('./GraphQL/typeDefs.js')
-// const {resolvers}=require('./GraphQL/resolvers.js')
 const {
     validateRegisterInput
 } = require('./utils/validate.js')
@@ -46,12 +45,10 @@ db.once("open", () => {
 
 
 async function checkAuth(context) {
-    console.log(context.req.headers.authorization);
     let authHeader = context.req.headers.authorization;
     if (authHeader) {
         try {
             let user = jwt.verify(authHeader, SECRET_KEY);
-            console.log(user);
             return user
         } catch (error) {
             console.log(error);
@@ -81,7 +78,6 @@ async function checkAuth(context) {
 let resolvers = {
     Query: {
         hello: () => {
-            console.log("Welcome To This App");
             return "Welcome To This App"
         },
         getUserDetails: async () => {
@@ -144,7 +140,6 @@ let resolvers = {
                 let alreadySearch = await userdetails.find({
                     email: email.toLowerCase().trim()
                 })
-                console.log(alreadySearch);
                 if (alreadySearch.length > 0) {
                     throw new UserInputError("User already exists", {
                         errors: {
@@ -152,7 +147,6 @@ let resolvers = {
                         }
                     })
                 } else {
-                    // console.log(object);
                     let hash = await bcrypt.hash(password.trim(), 12);
                     let new_user = new userdetails({
                         name: name.toLowerCase().trim(),
@@ -183,10 +177,8 @@ let resolvers = {
             let userExists = await userdetails.findOne({
                 email: email.toLowerCase().trim()
             })
-            console.log(userExists);
             if (userExists) {
                 let passwordValidate = await bcrypt.compare(password, userExists.password)
-                console.log(passwordValidate);
                 if (!passwordValidate) {
                     throw new UserInputError("Invalid Credentials",{
                         errors:{
@@ -194,8 +186,6 @@ let resolvers = {
                         }
                     })
                 } else {
-                    console.log("Login Successfull");
-                    console.log(userExists.name);
                     const token = jwt.sign({
                         id: userExists._id,
                         email: userExists.email,
@@ -203,7 +193,6 @@ let resolvers = {
                     }, SECRET_KEY, {
                         expiresIn: "1 Hour"
                     })
-                    console.log(token);
                     return {
                         ...userExists._doc,
                         id: userExists._id,
@@ -219,33 +208,26 @@ let resolvers = {
             }
         },
         createPost: async (parent, object, context) => {
-            // console.log(context);
             let {
                 title,body
             } = object
             let user = await checkAuth(context)
-            console.log(user);
             let post = new postdetails({
                 body,
                 title,
                 email: user.email,
                 name: user.name,
             })
-            console.log(post);
             let result = await post.save()
-            console.log(result);
             return result
         },
         deletePost: async (parent, object, context) => {
-            // console.log(context);
             let {
                 id
             } = object
             let user = await checkAuth(context)
-            console.log(user);
             try {
                 let post = await postdetails.findById(id)
-                console.log(post);
                 if (post.email === user.email) {
                     await postdetails.deleteOne({
                         _id: post._id
@@ -260,17 +242,14 @@ let resolvers = {
             }
         },
         createComment: async (parent, object, context) => {
-            // console.log(context);
             let {
                 id,
                 body
             } = object
             let user = await checkAuth(context)
-            console.log(user);
             if (body.trim() != "" && id.trim() != "") {
                 try {
                     let post = await postdetails.findById(id)
-                    console.log(post);
                     if (post) {
                         post.comments.unshift({
                             body,
@@ -292,18 +271,14 @@ let resolvers = {
             }
         },
         deleteComment: async (parent, object, context) => {
-            // console.log(context);
             let {
                 postId,
                 commentId
             } = object
             let user = await checkAuth(context)
-            console.log(user);
             try {
                 let post = await postdetails.findById(postId)
-                console.log(post.comments);
                 let commentIndex = post.comments.findIndex(element => element._id == commentId)
-                console.log(commentIndex);
                 if (post.comments[commentIndex].email === user.email) {
                     post.comments.splice(commentIndex, 1)
                     await post.save()
@@ -321,10 +296,8 @@ let resolvers = {
                 id
             } = object
             let user = await checkAuth(context)
-            console.log(user);
             try {
                 let post = await postdetails.findById(id)
-                console.log(post);
                 if (post) {
                     if (post.likes.find(like => like.email === user.email)) {
                         post.likes = post.likes.filter(like => like.email !== user.email)

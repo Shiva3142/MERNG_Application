@@ -30,8 +30,6 @@ function Comment(object) {
     
     const [mutation, { data2, loading2, error2 }] = useMutation(DELETE_COMMENT, {
         update(proxy, result) {
-            // console.log(proxy);
-            // console.log(result);
             object.reload()
         },
         onError(errors) {

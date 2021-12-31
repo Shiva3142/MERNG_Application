@@ -36,7 +36,6 @@ function Register() {
 
     let navigate = useNavigate()
     let { state, dispatch } = useContext(userContext)
-    // console.log(state);
     useEffect(() => {
         if (state.user === true) {
             navigate("/")
@@ -45,15 +44,12 @@ function Register() {
     const [mutation, { data, loading, error }] = useMutation(REGISTER_QUERY, {
         update(proxy, result) {
                         updateShowLoder(0)
-            // console.log(proxy);
-            // console.log(result);
             localStorage.setItem("token", result.data.registerUser.token)
             dispatch({ type: "LOGIN", username: result.data.registerUser.name, email: result.data.registerUser.email })
             navigate("/")
         },
         onError(errors) {
-                        updateShowLoder(0)
-            // console.log( Object.values(errors.graphQLErrors[0].extensions.errors)[0]);
+            updateShowLoder(0)
             window.alert(Object.values(errors.graphQLErrors[0].extensions.errors)[0]);
         }
     });
@@ -74,10 +70,6 @@ function Register() {
         updateShowLoder(1)
         event.preventDefault()
         if (userDetails.name.trim() !== "" && userDetails.email.trim() !== "" && userDetails.password.trim() !== "") {
-            console.log("in signup");
-            if (data) {
-                console.log(data);
-            }
             let result = await mutation({
                 variables: {
                     name: userDetails.name,
@@ -85,7 +77,6 @@ function Register() {
                     password: userDetails.password
                 }
             })
-            console.log(result);
         }
         else {
             alert("Please Fill All the required fields")
