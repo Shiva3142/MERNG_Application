@@ -117,6 +117,8 @@ function App() {
             </Route>
             <Route exact path="/post/:post_id" element={<Post />}>
             </Route>
+            <Route path="*" element={<Home/>}>
+            </Route>
           </Routes>
         </userContext.Provider>
       </ApolloProvider>
