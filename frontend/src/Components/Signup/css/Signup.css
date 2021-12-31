@@ -1,0 +1,14 @@
+
+.image {
+    margin-top: -100px;
+}
+.signupformcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+.signupform {
+    max-width: 450px;
+    
+}
