@@ -50,7 +50,7 @@ function Comment(object) {
             <div className="ui comments">
                 <div className="comment">
                     <a className="avatar">
-                        <img src="https://semantic-ui.com/images/avatar/large/stevie.jpg" />
+                        <img src="https://semantic-ui.com/images/avatar2/large/elyse.png" />
                     </a>
                     <div className="content">
                         <a className="author">{object.value.name}</a>

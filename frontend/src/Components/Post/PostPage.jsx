@@ -200,7 +200,7 @@ function PostPage(object) {
 
                                 <div className="item">
                                     <div className="image">
-                                        <img src="https://semantic-ui.com/images/avatar/large/elliot.jpg" />
+                                        <img src="https://semantic-ui.com/images/avatar2/large/elyse.png" />
                                     </div>
                                     <div className="content">
                                         <a className="header">{data.getPostdetail.title}</a>
