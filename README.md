@@ -147,9 +147,7 @@
 # Fetures
 <ol>
     <li>Created webpage is Responsive for desktop and mobile devices</li>
-    <li>here users can sign up and login</li>
+    <li>here users can Register,login, create Post, delete Post, like post, comment on post delete comment</li>
     <li>user's password is hashed for security purpose</li>
-    <li>Rezorpay payment getway is also integrated with test api keys</li>
     <li>form validation is added</li>
-    <li>Products we can increase in frontend by just adding new entry in products.json file whuch is in Assets folder's data folder</li>
 </ol>
