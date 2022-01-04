@@ -4,36 +4,14 @@ import './css/Signup.css'
 import { useNavigate } from 'react-router-dom';
 import { userContext } from '../../App';
 import Loder from '../templates/Loder';
-
 import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    useQuery,
-    gql,
-    createHttpLink,
     useMutation
 } from "@apollo/client";
 
-const REGISTER_QUERY = gql`
-    mutation loginUser(
-            $email:String
-            $password:String
-        ){
-            loginUser(
-            email:$email
-            password:$password
-            ){
-                id email token name
-            }
-        }
-`
-
-
+import {LOGIN_QUERY} from '../../Graphql/graphql.tsx'
 
 function Login() {
     let [showloder, updateShowLoder] = useState(0)
-
     let { state, dispatch } = useContext(userContext)
     let navigate = useNavigate()
     useEffect(() => {
@@ -41,7 +19,7 @@ function Login() {
             navigate("/")
         }
     }, [])
-    const [mutation, { data, loading, error }] = useMutation(REGISTER_QUERY, {
+    const [mutation] = useMutation(LOGIN_QUERY, {
         update(proxy, result) {
             localStorage.setItem("token", result.data.loginUser.token)
             dispatch({ type: "LOGIN", username: result.data.loginUser.name, email: result.data.loginUser.email })
@@ -53,8 +31,6 @@ function Login() {
             window.alert(Object.values(errors.graphQLErrors[0].extensions.errors)[0]);
         },
     });
-
-
     let [userDetails, updateUserDetails] = useState({
         email: "",
         password: ""
@@ -71,7 +47,7 @@ function Login() {
         updateShowLoder(1)
         event.preventDefault()
         if (userDetails.email.trim() !== "" && userDetails.password.trim() !== "") {
-            let result = await mutation({
+            await mutation({
                 variables: {
                     name: userDetails.name,
                     email: userDetails.email,
@@ -83,7 +59,6 @@ function Login() {
             alert("Please Fill All the required fields")
         }
     }
-
     return (
         <>
         {

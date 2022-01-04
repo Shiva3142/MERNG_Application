@@ -1,0 +1,47 @@
+generator client {
+  provider= "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+}
+
+
+model userdetails{
+  id Int @id @default(autoincrement())
+  name String
+  email String
+  password String
+  createdAt DateTime @default(now())
+}
+
+model postdetails{
+  id Int @id @default(autoincrement())
+  title String
+  body String
+  name String
+  email String
+  createdAt DateTime @default(now())
+  comments comments[]
+  likes likes[]
+}
+
+model comments{
+  id Int @id @default(autoincrement())
+  body String
+  name String
+  email String
+  createdAt DateTime @default(now())
+  post postdetails @relation(fields: [postId],references: [id])
+  postId Int
+}
+
+model likes{
+  id Int @id @default(autoincrement())
+  name String
+  email String
+  createdAt DateTime @default(now())
+  post postdetails @relation(fields: [postId],references: [id])
+  postId Int
+}

@@ -2,38 +2,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import Loder from '../templates/Loder';
-
-
+import {REGISTER_QUERY} from '../../Graphql/graphql.tsx'
 import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    useQuery,
-    gql,
-    createHttpLink,
     useMutation
 } from "@apollo/client";
 import { userContext } from '../../App';
 
-const REGISTER_QUERY = gql`
-    mutation registerUser(
-            $name:String
-            $email:String
-            $password:String
-        ){
-            registerUser(
-            name:$name
-            email:$email
-            password:$password
-            ){
-                id email token name
-            }
-        }
-`
-
 function Register() {
     let [showloder, updateShowLoder] = useState(0)
-
     let navigate = useNavigate()
     let { state, dispatch } = useContext(userContext)
     useEffect(() => {
@@ -41,7 +17,7 @@ function Register() {
             navigate("/")
         }
     }, [])
-    const [mutation, { data, loading, error }] = useMutation(REGISTER_QUERY, {
+    const [mutation] = useMutation(REGISTER_QUERY, {
         update(proxy, result) {
                         updateShowLoder(0)
             localStorage.setItem("token", result.data.registerUser.token)
@@ -70,7 +46,7 @@ function Register() {
         updateShowLoder(1)
         event.preventDefault()
         if (userDetails.name.trim() !== "" && userDetails.email.trim() !== "" && userDetails.password.trim() !== "") {
-            let result = await mutation({
+            await mutation({
                 variables: {
                     name: userDetails.name,
                     email: userDetails.email,
@@ -82,8 +58,6 @@ function Register() {
             alert("Please Fill All the required fields")
         }
     }
-
-
 
     return (
         <>

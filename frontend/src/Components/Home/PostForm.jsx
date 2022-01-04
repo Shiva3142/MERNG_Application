@@ -1,36 +1,8 @@
 import React, { useContext, useState } from 'react'
-
 import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    useQuery,
-    gql,
-    createHttpLink,
     useMutation
 } from "@apollo/client";
-
-// import FETCH_POST_QUERY from '../../Graphql/graphql.jsx'
-
-
-const POST_THE_POST = gql`
-mutation createPost(
-            $title:String
-            $body:String
-        ){
-            createPost(
-            title:$title
-            body:$body
-            ){
-                name
-                id
-                title
-                body
-                likeCount
-                commentCount
-            }
-        }
-`
+import {POST_THE_POST} from '../../Graphql/graphql.tsx'
 
 function PostForm(object) {
     let [postdetail, updatePostdetails] = useState({
@@ -40,9 +12,8 @@ function PostForm(object) {
     function updatepostdetail(event) {
         updatePostdetails({ ...postdetail, [event.target.name]: event.target.value })
     }
-
-    const [mutation, { data2, loading2, error2}] = useMutation(POST_THE_POST, {
-        update(proxy, result) {
+    const [mutation] = useMutation(POST_THE_POST, {
+        update() {
         },
         onError(errors) {
             console.log(errors);
@@ -51,18 +22,16 @@ function PostForm(object) {
     async function PostThePost(event) {
         event.preventDefault()
         if (postdetail.title.trim() !== "" && postdetail.body.trim() !== "") {
-            let result = await mutation({
+            await mutation({
                 variables: {
                     title: postdetail.title,
                     body: postdetail.body
                 }
             })
-            // console.log(result);
             updatePostdetails({
                 title: "",
                 body: ""
             })
-            // window.location.reload()
             object.reload()
         } else {
             window.alert("Please Fill all The details")

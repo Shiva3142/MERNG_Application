@@ -1,47 +1,26 @@
 import React, { useContext } from 'react'
 import { userContext } from "../../App";
 import moment from 'moment';
-
+import {DELETE_COMMENT} from '../../Graphql/graphql.tsx'
 import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    useQuery,
-    gql,
-    createHttpLink,
     useMutation
 } from "@apollo/client";
-import { useNavigate } from 'react-router-dom';
-const DELETE_COMMENT = gql`
-mutation deleteComment(
-            $postId:ID!
-            $commentId:ID!
-        ){
-            deleteComment(
-            postId:$postId
-            commentId:$commentId
-            )
-        }
-`
 
 function Comment(object) {
-    let { state, dispatch } = useContext(userContext)
-    let navigate = useNavigate()
+    let { state } = useContext(userContext)
     
-    const [mutation, { data2, loading2, error2 }] = useMutation(DELETE_COMMENT, {
-        update(proxy, result) {
+    const [mutation] = useMutation(DELETE_COMMENT, {
+        update() {
             object.reload()
         },
         onError(errors) {
             console.log(errors);
         }
     });
-    
     async function deleteComment() {
         await mutation({
             variables: {
-                postId:object.postid,
-                commentId:object.value.id
+                commentId:parseInt(object.value.id)
             }
         })
     }
@@ -63,9 +42,7 @@ function Comment(object) {
                                             Delete Comment</div>
                                     </>
                                 ) : (
-                                    <>
-
-                                    </>
+                                    <></>
                                 )
                             }
                         </div>

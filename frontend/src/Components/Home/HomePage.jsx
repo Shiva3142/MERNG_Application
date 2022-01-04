@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from "react-router-dom";
 import PostsContainer from './PostsContainer';
-
 import './css/Homepage.css'
 import { userContext } from '../../App';
+
 function HomePage() {
     let { state, dispatch } = useContext(userContext)
     return (
         <>
-        
             <div className="ui vertical menu navbar">
                 <i className="x icon icon" style={{ color: "white", "position": "absolute", "right": "10px", "top": "10px", "zIndex": "10000", cursor: "pointer" }}
                     onClick={() => {
@@ -16,8 +15,13 @@ function HomePage() {
                     }}
                 ></i>
                 <NavLink to="/" className="active item">Home</NavLink>
-                {/* <a className="item">About</a> */}
-
+                {
+                    state.user === true ? (
+                        <NavLink to="/account" className=" item">Account</NavLink>
+                    ) : (
+                        <></>
+                    )
+                }
                 {
                     state.user === true ? (<>
                         <span style={{ color: "white" }} className="item " onClick={() => {
@@ -41,7 +45,13 @@ function HomePage() {
 
                             </a>
                             <NavLink to="/" className="active item">Home</NavLink>
-                            {/* <a className="item">About</a> */}
+                            {
+                                state.user === true ? (
+                                    <NavLink to="/account" className=" item">Account</NavLink>
+                                ) : (
+                                    <></>
+                                )
+                            }                            
                             <div className="right item">
                                 {
                                     state.user === true ? (<>

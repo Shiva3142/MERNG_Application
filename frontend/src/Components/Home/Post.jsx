@@ -2,47 +2,26 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import moment from 'moment';
 import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    useQuery,
-    gql,
-    createHttpLink,
     useMutation
 } from "@apollo/client";
-
-const LIKE_THE_POST = gql`
-mutation likePost(
-        $id:ID!
-        ){
-            likePost(
-            id:$id
-            ){
-                likeCount
-            }
-        }
-`
+import {LIKE_THE_POST} from '../../Graphql/graphql.tsx'
 
 
 function Post(object) {
     let [likecount,updatelikecount]=useState(object.value.likeCount)
-
-    const [mutation, { data2, loading2, error2 }] = useMutation(LIKE_THE_POST, {
+    const [mutation] = useMutation(LIKE_THE_POST, {
         update(proxy, result) {
             updatelikecount(result.data.likePost.likeCount)
         },
         onError(errors) {
             console.log(errors);
         }
-    });
-
-    
-    function likeThePost(event) {
+    });    
+    function likeThePost() {
         mutation({variables:{
-            id:object.value.id
+            id:parseInt(object.value.id)
         }})
     }
-
     return (
         <>
             <div className="card">

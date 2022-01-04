@@ -29,20 +29,25 @@ let typeDefs = gql `
         name:String
         email:String
         createdAt:String
+        postId:Int
     }
     type like{
         id:ID!
         name:String
         email:String
         createdAt:String
+        postId:Int
     }
     type Query{
         hello:String
         getUserDetails:[userdetail]
         getPostDetails:[postdetail]
         getPostdetail(
-            id:ID!
+            id:Int!
         ):postdetail
+        getUserPosts(
+            email:String
+        ):[postdetail]
     }
     type Mutation{
         registerUser(
@@ -60,18 +65,17 @@ let typeDefs = gql `
             title:String
         ):postdetail
         deletePost(
-            id:ID!
+            id:Int!
         ):Boolean
         createComment(
-            id:ID!
+            id:Int!
             body:String
         ):comment
         deleteComment(
-            postId:ID!
-            commentId:ID!
+            commentId:Int!
         ):Boolean
         likePost(
-            id:ID!
+            id:Int!
         ):postdetail
     }
 `
