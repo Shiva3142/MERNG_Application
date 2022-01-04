@@ -21,8 +21,8 @@
             </li>
             <li>utils
                 <ul>
-                    validate.js
-                    auth-check.jsx
+                    <li>validate.js</li>
+                    <li>auth-check.jsx</li>
                 </ul>
             </li>
             <li>index.js</li>

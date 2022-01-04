@@ -69,7 +69,8 @@ let resolvers = {
                 throw new UserInputError("Post Not Found")
             }
         },
-        getUserPosts: async (parent, object) => {
+        getUserPosts: async (parent, object,context) => {
+            let user = await checkAuth(context)
             try {
                 let post=await prismaClient.postdetails.findMany({
                     where:{

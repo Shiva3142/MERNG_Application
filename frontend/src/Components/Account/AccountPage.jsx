@@ -6,6 +6,7 @@ import {
     useQuery
 } from "@apollo/client";
 import Post from '../Home/Post';
+import PostForm from '../Home/PostForm';
 
 
 
@@ -73,6 +74,7 @@ function AccountPage() {
                     </div>
                 </div>
                 <h2 class="ui header" style={{ margin: "30px 10px" }}>Your Posts</h2>
+                <PostForm reload={refetch}/>
                 <h1 style={{ textAlign: "center" }}>Some of the recent Posts</h1>
                 <div className="ui cards postcontainer">
                     {

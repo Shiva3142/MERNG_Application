@@ -41,7 +41,6 @@ function PostForm(object) {
         <>
             <div className="ui container" style={{ margin: "20px 5px" }}>
                 <h3 style={{ textAlign: "center" }}>Post any thoughts</h3>
-
                 <form onSubmit={PostThePost} className="ui form">
                     <div className="field">
                         <label>Title</label>
