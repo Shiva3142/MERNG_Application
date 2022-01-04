@@ -10,17 +10,19 @@
         <ul>
             <li>GraphQL
                 <ul>
-                    typeDef.js
+                    <li>typeDef.js</li>
+                    <li>resolvers.js</li>
                 </ul>
             </li>
-            <li>Models
+            <li>prisma
                 <ul>
-                    databaseModels.js
+                    schema.prisma
                 </ul>
             </li>
             <li>utils
                 <ul>
                     validate.js
+                    auth-check.jsx
                 </ul>
             </li>
             <li>index.js</li>
@@ -72,6 +74,13 @@
                                     </li>
                                     <li>Login.jsx</li>
                                     <li>Register.jsx</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>Account
+                                <ul>
+                                    <li>AccountPage.jsx</li>
                                 </ul>
                             </li>
                         </ul>
