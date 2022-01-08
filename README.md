@@ -54,11 +54,6 @@
                         <ul>
                             <li>Post
                                 <ul>
-                                    <li>css
-                                        <ul>
-                                            Postpage.css
-                                        </ul>
-                                    </li>
                                     <li>Comment.jsx</li>
                                     <li>Postpage.jsx</li>
                                 </ul>
