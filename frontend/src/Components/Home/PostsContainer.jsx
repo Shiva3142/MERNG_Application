@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
-import FETCH_POSTs_QUERY from '../../Graphql/graphql.tsx'
-import {
-    useQuery
-} from "@apollo/client";
 import Post from './Post';
 import { userContext } from '../../App';
 import { NavLink } from 'react-router-dom';
 import PostForm from './PostForm';
 import Loder from '../templates/Loder';
-
+// import FETCH_POSTs_QUERY from '../../Graphql/graphql.tsx'
+// import {
+//     useQuery
+// } from "@apollo/client";
+import { useGetPostDetailsQuery } from "../../Graphql/Graphql-codegen/graphql.tsx";
+    
 function PostsContainer() {
     let [showloder, updateShowLoder] = useState(1)
     let { state } = useContext(userContext)
-    const {data, refetch } = useQuery(FETCH_POSTs_QUERY);
+    // const {data, refetch } = useQuery(FETCH_POSTs_QUERY);
+    const {data, refetch } = useGetPostDetailsQuery();
     useEffect(() => {
         refetch()
         updateShowLoder(0)

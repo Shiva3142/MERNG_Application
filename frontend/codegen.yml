@@ -1,0 +1,12 @@
+schema: "http://127.0.0.1/graphql"
+overwrite: true
+documents : "src/Graphql/graphql.tsx"
+watch : true
+generates:
+  src/Graphql/Graphql-codegen/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config :
+      withHook : true

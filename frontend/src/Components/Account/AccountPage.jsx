@@ -1,20 +1,23 @@
 import React, { useContext, useEffect } from 'react'
 import { userContext } from '../../App';
 import { NavLink, useNavigate } from 'react-router-dom'
-import { GET_USERs_POST } from '../../Graphql/graphql.tsx'
-import {
-    useQuery
-} from "@apollo/client";
 import Post from '../Home/Post';
 import PostForm from '../Home/PostForm';
-
-
+// import {
+//     useQuery
+// } from "@apollo/client";
+// import { GET_USERs_POST } from '../../Graphql/graphql.tsx'
+import { useGetUserPostsQuery } from "../../Graphql/Graphql-codegen/graphql.tsx";
 
 function AccountPage() {
     let { state, dispatch } = useContext(userContext)
-    console.log(state);
     let navigate = useNavigate()
-    const { data, refetch } = useQuery(GET_USERs_POST, {
+    // const { data, refetch } = useQuery(GET_USERs_POST, {
+    //     variables: {
+    //         email: state.email
+    //     }
+    // });
+    const { data, refetch } = useGetUserPostsQuery({
         variables: {
             email: state.email
         }
@@ -28,13 +31,13 @@ function AccountPage() {
     return (
         <>
             <div className="ui container">
-                <div class="ui menu">
-                    <a class="active item" style={{ padding: "10px 20px !impoartant" }}>
+                <div className="ui menu">
+                    <a className="active item" style={{ padding: "10px 20px !impoartant" }}>
                         <NavLink to="/">
                             Home
                         </NavLink>
                     </a>
-                    <div class="right menu">
+                    <div className="right menu">
                         {
                             state.user === true ? (
                                 <NavLink to="/account" className="item" >Hello {state.username.split(" ")[0]}</NavLink>
@@ -59,21 +62,21 @@ function AccountPage() {
                 </div>
             </div>
             <div className="ui container">
-                <h2 class="ui header" style={{ margin: "20px 10px" }}>Account Info</h2>
-                <div class="ui items" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <div class="item" style={{border:"1px solid gray", width:"fit-content",padding:"20px"}}>
-                        <a class="ui tiny image">
+                <h2 className="ui header" style={{ margin: "20px 10px" }}>Account Info</h2>
+                <div className="ui items" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <div className="item" style={{border:"1px solid gray", width:"fit-content",padding:"20px"}}>
+                        <a className="ui tiny image">
                             <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png" />
                         </a>
-                        <div class="content" style={{display:"flex",justifyContent:"center",flexDirection:"column"}}>
-                            <a class="header">{state.username}</a>
-                            <div class="description">
+                        <div className="content" style={{display:"flex",justifyContent:"center",flexDirection:"column"}}>
+                            <a className="header">{state.username}</a>
+                            <div className="description">
                                 <p>{state.email}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <h2 class="ui header" style={{ margin: "30px 10px" }}>Your Posts</h2>
+                <h2 className="ui header" style={{ margin: "30px 10px" }}>Your Posts</h2>
                 <PostForm reload={refetch}/>
                 <h1 style={{ textAlign: "center" }}>Some of the recent Posts</h1>
                 <div className="ui cards postcontainer">

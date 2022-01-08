@@ -1,14 +1,15 @@
-import {
-    useQuery,
-    useMutation
-} from "@apollo/client";
 import React, { useContext, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import Comment from "./Comment";
 import moment from 'moment';
 import { userContext } from "../../App";
 import Loder from '../templates/Loder';
-import { FETCH_POST_QUERY, LIKE_THE_POST, CREATE_COMMENT, DELETE_THE_POST } from '../../Graphql/graphql.tsx'
+// import {
+//     useQuery,
+//     useMutation
+// } from "@apollo/client";
+// import { FETCH_POST_QUERY, LIKE_THE_POST, CREATE_COMMENT, DELETE_THE_POST } from '../../Graphql/graphql.tsx'
+import { useGetPostdetailQuery, useCreateCommentMutation, useDeletePostMutation, useLikePostMutation } from "../../Graphql/Graphql-codegen/graphql.tsx";
 
 function PostPage(object) {
     let [showloder, updateShowLoder] = useState(0)
@@ -16,13 +17,38 @@ function PostPage(object) {
     let { post_id } = useParams()
     let navigate = useNavigate()
     let { state, dispatch } = useContext(userContext)
-    const { data, refetch } = useQuery(FETCH_POST_QUERY, { variables: { id: parseInt(post_id) } });
+    // const { data, refetch } = useQuery(FETCH_POST_QUERY, { variables: { id: parseInt(post_id) } });
+    const { data, refetch } = useGetPostdetailQuery({ variables: { id: parseInt(post_id) } });
     if (data) {
     }
     else {
         navigate("/")
     }
-    const [mutation,] = useMutation(DELETE_THE_POST, {
+    // const [mutation,] = useMutation(DELETE_THE_POST, {
+    //     update() {
+    //         navigate("/")
+    //     },
+    //     onError(errors) {
+    //         console.log(errors);
+    //     }
+    // });
+    // const [commentmutation] = useMutation(CREATE_COMMENT, {
+    //     update() {
+    //         refetch()
+    //     },
+    //     onError(errors) {
+    //         console.log(errors);
+    //     }
+    // });
+    // const [likemutation] = useMutation(LIKE_THE_POST, {
+    //     update() {
+    //         refetch()
+    //     },
+    //     onError(errors) {
+    //         console.log(errors);
+    //     }
+    // });
+    const [mutation,] = useDeletePostMutation({
         update() {
             navigate("/")
         },
@@ -30,7 +56,7 @@ function PostPage(object) {
             console.log(errors);
         }
     });
-    const [commentmutation] = useMutation(CREATE_COMMENT, {
+    const [commentmutation] = useCreateCommentMutation({
         update() {
             refetch()
         },
@@ -38,7 +64,7 @@ function PostPage(object) {
             console.log(errors);
         }
     });
-    const [likemutation] = useMutation(LIKE_THE_POST, {
+    const [likemutation] = useLikePostMutation({
         update() {
             refetch()
         },
@@ -94,13 +120,13 @@ function PostPage(object) {
                 )
             }
             <div className="ui container">
-                <div class="ui menu">
-                    <a class="active item" style={{ padding: "10px 20px !impoartant" }}>
+                <div className="ui menu">
+                    <a className="active item" style={{ padding: "10px 20px !impoartant" }}>
                         <NavLink to="/">
                             Home
                         </NavLink>
                     </a>
-                    <div class="right menu">
+                    <div className="right menu">
                         {
                             state.user === true ? (
                                 <NavLink to="/account" className="item" >Account</NavLink>
@@ -140,7 +166,7 @@ function PostPage(object) {
                                         </div>
                                         <h5>by {data.getPostdetail.name}</h5>
                                         <div className="meta">
-                                            <span className="cinema">{moment(data.getPostdetail.createdAt).fromNow()}</span>
+                                            <span className="cinema">{moment(Date(data.getPostdetail.createdAt)).fromNow()}</span>
                                         </div>
                                         <div className="extra">
                                             <div className="ui basic green button countsbtn" onClick={likeThePost}>
@@ -165,11 +191,11 @@ function PostPage(object) {
                             {
                                 state.user === true ? (
                                     <>
-                                        <div class="ui action input" style={{ margin: "20px auto", display: "flex", width: "fit-content" }}>
+                                        <div className="ui action input" style={{ margin: "20px auto", display: "flex", width: "fit-content" }}>
                                             <input type="text" placeholder="Enter Comment" value={comment} required onChange={(event) => {
                                                 updateComment(event.target.value)
                                             }} />
-                                            <button class="ui button" onClick={createComment}>Post</button>
+                                            <button className="ui button" onClick={createComment}>Post</button>
                                         </div>
                                     </>
                                 ) : (
@@ -181,13 +207,13 @@ function PostPage(object) {
                             {
                                 data && data.getPostdetail.comments.length === 0 ? (
                                     <>
-                                        <div class="ui raised segment">None of the Comments Are available for this Post .</div>
+                                        <div className="ui raised segment">None of the Comments Are available for this Post .</div>
                                     </>
                                 ) : (
                                     <>
                                         {
                                             data && data.getPostdetail.comments.map((value, index) => {
-                                                console.log(value);
+                                                // console.log(value);
                                                 return (
                                                     <Comment key={index} value={value} postid={data.getPostdetail.id} reload={refetch} />
                                                 )

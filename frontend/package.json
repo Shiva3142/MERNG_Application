@@ -25,7 +25,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate-codegen": "graphql-codegen --config codegen.yml"
   },
   "eslintConfig": {
     "extends": [
@@ -44,5 +45,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@graphql-codegen/typescript": "2.4.2",
+    "@graphql-codegen/typescript-react-apollo": "3.2.3",
+    "@graphql-codegen/typescript-operations": "2.2.2",
+    "@graphql-codegen/cli": "2.3.1"
   }
 }

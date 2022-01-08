@@ -3,7 +3,7 @@ import {
 } from "@apollo/client";
 
 const FETCH_POSTs_QUERY = gql`
-{
+query getPostDetails{
     getPostDetails{
         name
         id
@@ -47,7 +47,7 @@ const LOGIN_QUERY = gql`
 `
 
 const FETCH_POST_QUERY = gql`
-query ($id:Int!){
+query getPostdetail($id:Int!){
         getPostdetail(id:$id){
         name
         id
@@ -64,6 +64,7 @@ query ($id:Int!){
             id
             body
             email
+            createdAt
         }
         likeCount
         commentCount
@@ -72,7 +73,7 @@ query ($id:Int!){
 }
 `
 const GET_USERs_POST = gql`
-query ($email:String){
+query getUserPosts($email:String){
     getUserPosts(email: $email) {
         name
         id

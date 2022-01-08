@@ -36,6 +36,9 @@ let resolvers = {
                     include:{
                         comments:true,
                         likes:true
+                    },
+                    orderBy:{
+                        id:'desc'
                     }
                 })
                 if (!posts) {

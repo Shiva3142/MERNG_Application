@@ -1,15 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState ,useContext} from 'react'
 import { NavLink } from 'react-router-dom'
 import moment from 'moment';
-import {
-    useMutation
-} from "@apollo/client";
-import {LIKE_THE_POST} from '../../Graphql/graphql.tsx'
+import { userContext } from '../../App';
+// import {
+//     useMutation
+// } from "@apollo/client";
+// import {LIKE_THE_POST} from '../../Graphql/graphql.tsx'
+import { useLikePostMutation } from "../../Graphql/Graphql-codegen/graphql.tsx";
 
 
 function Post(object) {
+    let { state, dispatch } = useContext(userContext)
     let [likecount,updatelikecount]=useState(object.value.likeCount)
-    const [mutation] = useMutation(LIKE_THE_POST, {
+    // const [mutation] = useMutation(LIKE_THE_POST, {
+    //     update(proxy, result) {
+    //         updatelikecount(result.data.likePost.likeCount)
+    //     },
+    //     onError(errors) {
+    //         console.log(errors);
+    //     }
+    // });    
+    const [mutation] = useLikePostMutation({
         update(proxy, result) {
             updatelikecount(result.data.likePost.likeCount)
         },
@@ -18,9 +29,14 @@ function Post(object) {
         }
     });    
     function likeThePost() {
-        mutation({variables:{
-            id:parseInt(object.value.id)
-        }})
+        if (state.user===true) {
+            mutation({variables:{
+                id:parseInt(object.value.id)
+            }})
+        }
+        else{
+            window.alert("please login to like, comment the post ")
+        }
     }
     return (
         <>
@@ -35,7 +51,7 @@ function Post(object) {
                         by {object.value.name}
                     </div>
                     <div className="meta">
-                        {moment(object.value.createdAt).fromNow() }
+                        {moment(Date(object.value.createdAt)).fromNow() }
                     </div>
                     <div className="description">
                         {object.value.body}
