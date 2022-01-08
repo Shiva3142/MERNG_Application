@@ -94,11 +94,17 @@
                     </li>
                     <li>GraphQL
                         <ul>
+                            <li>Graphql-codegen
+                                <ul>
+                                    <li>graphql.jsx</li>
+                                </ul>
+                            </li>
                             <li>graphql.jsx</li>
                         </ul>
                     </li>
                     <li>App.css</li>
                     <li>App.jsx</li>
+                    <li>codegen.yml</li>
                     <li>index.js</li>
                 </ul>
             </li>

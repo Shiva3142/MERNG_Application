@@ -1,23 +1,13 @@
 import React, { useContext } from 'react'
 import { userContext } from "../../App";
 import moment from 'moment';
-// import {DELETE_COMMENT} from '../../Graphql/graphql.tsx'
+
 import {useDeleteCommentMutation} from '../../Graphql/Graphql-codegen/graphql.tsx'
-// import {
-//     useMutation
-// } from "@apollo/client";
+
 
 function Comment(object) {
     let { state } = useContext(userContext)
     
-    // const [mutation] = useMutation(DELETE_COMMENT, {
-    //     update() {
-    //         object.reload()
-    //     },
-    //     onError(errors) {
-    //         console.log(errors);
-    //     }
-    // });
     const [mutation] = useDeleteCommentMutation({
         update() {
             object.reload()

@@ -1,8 +1,5 @@
 import React, { useState } from 'react'
-// import {
-//     useMutation
-// } from "@apollo/client";
-// import {POST_THE_POST} from '../../Graphql/graphql.tsx'
+
 import { useCreatePostMutation } from "../../Graphql/Graphql-codegen/graphql.tsx";
 
 function PostForm(object) {
@@ -13,13 +10,7 @@ function PostForm(object) {
     function updatepostdetail(event) {
         updatePostdetails({ ...postdetail, [event.target.name]: event.target.value })
     }
-    // const [mutation] = useMutation(POST_THE_POST, {
-    //     update() {
-    //     },
-    //     onError(errors) {
-    //         console.log(errors);
-    //     },
-    // });
+
     const [mutation] = useCreatePostMutation({
         update() {
         },

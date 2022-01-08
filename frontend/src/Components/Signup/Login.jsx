@@ -4,10 +4,7 @@ import './css/Signup.css'
 import { useNavigate } from 'react-router-dom';
 import { userContext } from '../../App';
 import Loder from '../templates/Loder';
-// import {
-//     useMutation
-// } from "@apollo/client";
-// import {LOGIN_QUERY} from '../../Graphql/graphql.tsx'
+
 import { useLoginUserMutation } from "../../Graphql/Graphql-codegen/graphql.tsx";
 
 
@@ -20,18 +17,7 @@ function Login() {
             navigate("/")
         }
     }, [])
-    // const [mutation] = useMutation(LOGIN_QUERY, {
-    //     update(proxy, result) {
-    //         localStorage.setItem("token", result.data.loginUser.token)
-    //         dispatch({ type: "LOGIN", username: result.data.loginUser.name, email: result.data.loginUser.email })
-    //         updateShowLoder(0)
-    //         navigate("/")
-    //     },
-    //     onError(errors) {
-    //         updateShowLoder(0)
-    //         window.alert(Object.values(errors.graphQLErrors[0].extensions.errors)[0]);
-    //     },
-    // });
+    
     const [mutation] = useLoginUserMutation({
         update(proxy, result) {
             localStorage.setItem("token", result.data.loginUser.token)

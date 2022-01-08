@@ -3,20 +3,13 @@ import { userContext } from '../../App';
 import { NavLink, useNavigate } from 'react-router-dom'
 import Post from '../Home/Post';
 import PostForm from '../Home/PostForm';
-// import {
-//     useQuery
-// } from "@apollo/client";
-// import { GET_USERs_POST } from '../../Graphql/graphql.tsx'
+
 import { useGetUserPostsQuery } from "../../Graphql/Graphql-codegen/graphql.tsx";
 
 function AccountPage() {
     let { state, dispatch } = useContext(userContext)
     let navigate = useNavigate()
-    // const { data, refetch } = useQuery(GET_USERs_POST, {
-    //     variables: {
-    //         email: state.email
-    //     }
-    // });
+
     const { data, refetch } = useGetUserPostsQuery({
         variables: {
             email: state.email

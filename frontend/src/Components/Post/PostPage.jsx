@@ -4,11 +4,7 @@ import Comment from "./Comment";
 import moment from 'moment';
 import { userContext } from "../../App";
 import Loder from '../templates/Loder';
-// import {
-//     useQuery,
-//     useMutation
-// } from "@apollo/client";
-// import { FETCH_POST_QUERY, LIKE_THE_POST, CREATE_COMMENT, DELETE_THE_POST } from '../../Graphql/graphql.tsx'
+
 import { useGetPostdetailQuery, useCreateCommentMutation, useDeletePostMutation, useLikePostMutation } from "../../Graphql/Graphql-codegen/graphql.tsx";
 
 function PostPage(object) {
@@ -17,37 +13,13 @@ function PostPage(object) {
     let { post_id } = useParams()
     let navigate = useNavigate()
     let { state, dispatch } = useContext(userContext)
-    // const { data, refetch } = useQuery(FETCH_POST_QUERY, { variables: { id: parseInt(post_id) } });
     const { data, refetch } = useGetPostdetailQuery({ variables: { id: parseInt(post_id) } });
     if (data) {
     }
     else {
         navigate("/")
     }
-    // const [mutation,] = useMutation(DELETE_THE_POST, {
-    //     update() {
-    //         navigate("/")
-    //     },
-    //     onError(errors) {
-    //         console.log(errors);
-    //     }
-    // });
-    // const [commentmutation] = useMutation(CREATE_COMMENT, {
-    //     update() {
-    //         refetch()
-    //     },
-    //     onError(errors) {
-    //         console.log(errors);
-    //     }
-    // });
-    // const [likemutation] = useMutation(LIKE_THE_POST, {
-    //     update() {
-    //         refetch()
-    //     },
-    //     onError(errors) {
-    //         console.log(errors);
-    //     }
-    // });
+
     const [mutation,] = useDeletePostMutation({
         update() {
             navigate("/")

@@ -2,24 +2,14 @@ import React, { useState ,useContext} from 'react'
 import { NavLink } from 'react-router-dom'
 import moment from 'moment';
 import { userContext } from '../../App';
-// import {
-//     useMutation
-// } from "@apollo/client";
-// import {LIKE_THE_POST} from '../../Graphql/graphql.tsx'
+
 import { useLikePostMutation } from "../../Graphql/Graphql-codegen/graphql.tsx";
 
 
 function Post(object) {
-    let { state, dispatch } = useContext(userContext)
+    let { state } = useContext(userContext)
     let [likecount,updatelikecount]=useState(object.value.likeCount)
-    // const [mutation] = useMutation(LIKE_THE_POST, {
-    //     update(proxy, result) {
-    //         updatelikecount(result.data.likePost.likeCount)
-    //     },
-    //     onError(errors) {
-    //         console.log(errors);
-    //     }
-    // });    
+
     const [mutation] = useLikePostMutation({
         update(proxy, result) {
             updatelikecount(result.data.likePost.likeCount)

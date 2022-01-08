@@ -3,10 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import Loder from '../templates/Loder';
 import { userContext } from '../../App';
-// import {REGISTER_QUERY} from '../../Graphql/graphql.tsx'
-// import {
-//     useMutation
-// } from "@apollo/client";
+
 import { useRegisterUserMutation } from "../../Graphql/Graphql-codegen/graphql.tsx";
 
 function Register() {
@@ -18,18 +15,7 @@ function Register() {
             navigate("/")
         }
     }, [])
-    // const [mutation] = useMutation(REGISTER_QUERY, {
-    //     update(proxy, result) {
-    //                     updateShowLoder(0)
-    //         localStorage.setItem("token", result.data.registerUser.token)
-    //         dispatch({ type: "LOGIN", username: result.data.registerUser.name, email: result.data.registerUser.email })
-    //         navigate("/")
-    //     },
-    //     onError(errors) {
-    //         updateShowLoder(0)
-    //         window.alert(Object.values(errors.graphQLErrors[0].extensions.errors)[0]);
-    //     }
-    // });
+    
     const [mutation] = useRegisterUserMutation({
         update(proxy, result) {
             updateShowLoder(0)
